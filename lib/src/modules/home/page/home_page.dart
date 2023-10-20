@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tracking_weight/src/core/app_routes.dart';
-import 'package:tracking_weight/src/core/widgets/add_weight_widget.dart';
 import 'package:tracking_weight/src/modules/weight/states/weight_state.dart';
 import 'package:tracking_weight/src/modules/weight/stores/weight_store.dart';
 
@@ -15,13 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   void initState() {
@@ -50,16 +43,70 @@ class _HomePageState extends State<HomePage> {
           child: Text('Você ainda não tem nenhum peso cadastrado'),
         );
       } else {
-        child = ListView.builder(
-          itemCount: state.weights.length,
-          itemBuilder: (context, index) => Row(
+        var currentWeight = state.weights.last;
+        child = Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.monitor_weight),
-              Text(state.weights[index].weight.toStringAsFixed(2)),
-              Expanded(child: Text(state.weights[index].date.toString())),
+              Row(
+                textBaseline: TextBaseline.alphabetic,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                children: [
+                  Text(
+                    'Seu peso',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.02,
+                  ),
+                  Text(
+                    '(Ultima atualização: ${currentWeight.date.day}/${currentWeight.date.month}/${currentWeight.date.year})',
+                    style: TextStyle(
+                        fontSize: 10, color: Theme.of(context).hintColor),
+                  ),
+                ],
+              ),
+              Row(
+                textBaseline: TextBaseline.alphabetic,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                children: [
+                  Text(
+                    currentWeight.weight.toString(),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 80,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.02,
+                  ),
+                  Text(
+                    'Kg',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 44,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         );
+        // ListView.builder(
+        //   itemCount: state.weights.length,
+        //   itemBuilder: (context, index) => Row(
+        //     children: [
+        //       const Icon(Icons.monitor_weight),
+        //       Text(state.weights[index].weight.toStringAsFixed(2)),
+        //       Expanded(child: Text(state.weights[index].date.toString())),
+        //     ],
+        //   ),
+        // );
       }
     } else {
       child = Container();

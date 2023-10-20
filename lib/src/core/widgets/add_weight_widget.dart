@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tracking_weight/src/modules/weight/models/weight_model.dart';
 
 class AddWeightWidget extends StatelessWidget {
-  const AddWeightWidget({super.key});
+  AddWeightWidget({super.key});
+  final TextEditingController weightTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +15,17 @@ class AddWeightWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Adicione seu peso atual (kg):',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            const Row(
+               children: [
+                 Text(
+                  'Adicione seu peso atual (kg):',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
+               ],
+             ),
             SizedBox(height: widthScreen * 0.05),
             TextFormField(
+              controller:weightTextController ,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(7),
@@ -28,7 +35,12 @@ class AddWeightWidget extends StatelessWidget {
             ),
             SizedBox(height: widthScreen * 0.05),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if(weightTextController.text.isNotEmpty){
+                     var weight = WeightModel(weight: double.parse(weightTextController.text) , date: DateTime.now());
+                    Navigator.pop(context,weight) ;
+                  }
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tracking_weight/src/core/app_routes.dart';
-import 'package:tracking_weight/src/modules/home/page/home_page.dart';
 import 'package:tracking_weight/src/modules/tabNavigation/tab_navigation_controller_page.dart';
-import 'package:tracking_weight/src/modules/weight/page/weight_history_page.dart';
+
 import 'package:tracking_weight/src/modules/weight/services/weight_service.dart';
 import 'package:tracking_weight/src/modules/weight/stores/weight_store.dart';
 

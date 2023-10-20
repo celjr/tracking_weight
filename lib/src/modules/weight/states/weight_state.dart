@@ -2,22 +2,38 @@
 
 import 'package:tracking_weight/src/modules/weight/models/weight_model.dart';
 
-abstract class WeightState {}
+abstract class WeightState {
+  final List<WeightModel> weights;
+  WeightState({
+    required this.weights,
+  });
 
-class InitialWeightState extends WeightState {}
+  InitialWeightState init()=> InitialWeightState();
+
+  SuccessWeightState success({required List<WeightModel> weights}) =>
+      SuccessWeightState(weights: weights);
+
+  LoadingWeightState loading() => LoadingWeightState(weights: weights);
+
+  ErrorWeightState error({required String message}) =>
+      ErrorWeightState(weights: weights, message: message);
+}
+
+class InitialWeightState extends WeightState {
+  InitialWeightState() : super(weights: []);
+}
 
 class SuccessWeightState extends WeightState {
-  final List<WeightModel> weights;
   SuccessWeightState({
-    required this.weights,
+    required super.weights,
   });
 }
 
-class LoadingWeightState extends WeightState {}
+class LoadingWeightState extends WeightState {
+  LoadingWeightState({required super.weights});
+}
 
 class ErrorWeightState extends WeightState {
   final String message;
-  ErrorWeightState({
-    required this.message,
-  });
+  ErrorWeightState({required this.message, required super.weights});
 }
